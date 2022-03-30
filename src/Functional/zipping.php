@@ -58,8 +58,9 @@ const unzip = 'Widmogrod\Functional\unzip';
 function unzip(Listt $xs): array
 {
     try {
-        [$x, $y] = head($xs);
-
+        $arr = head($xs);
+        $x = $arr[0];
+        $y = $arr[1];
         return [
             new ListtCons(function () use ($x, $xs) {
                 return [$x, unzip(tail($xs))[0]];

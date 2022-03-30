@@ -494,7 +494,7 @@ const sequenceM = 'Widmogrod\Functional\sequenceM';
 function sequenceM(Monad $a, Monad $b = null): Monad
 {
     return curryN(2, function (Monad ...$monads): Monad {
-        return array_reduce($monads, function (?Monad $a, Monad $b) {
+        return array_reduce($monads, function ($a, Monad $b) {
             return $a
                 ? $a->bind(function () use ($b) {
                     return $b;

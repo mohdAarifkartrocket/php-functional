@@ -36,7 +36,10 @@ function matchPatterns(array $patterns, $value = null)
         foreach ($patterns as $className => $fn) {
             $isTuplePattern = is_int($className) && is_array($fn);
             if ($isTuplePattern) {
-                [$tuple, $fn] = $fn;
+
+                $tuple = $fn[0];
+                $fn = $fn[1];
+                
                 $result = matchTuple($tuple, $value);
                 if ($result instanceof Just) {
                     return $fn(...$result->extract());
@@ -86,7 +89,7 @@ function matchTuple(array $tuplePattern, array $valueTuple)
     };
 
     $args = fromNil();
-    foreach (zip(fromIterable($tuplePattern), fromIterable($valueTuple)) as [$className, $value]) {
+    foreach (zip(fromIterable($tuplePattern), fromIterable($valueTuple)) as $className => $value) {
         if (!isMatch($value, $className)) {
             return nothing();
         }
